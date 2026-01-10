@@ -25,7 +25,7 @@ const Products: React.FC = () => {
       lightColor: 'bg-blue-50',
       icon: (
         <img 
-          src="/images/logos/curio.png" 
+          src="./images/logos/curio.png" 
           alt="Curio" 
           className="w-full h-full object-contain"
         />

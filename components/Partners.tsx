@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 
 const Partners: React.FC = () => {
   const partners = [
-    { name: 'iHub', logo: '/images/partners/ihub.png' },
-    { name: 'SSIP Gujarat', logo: '/images/partners/ssip.png' },
-    { name: 'GTU Ventures', logo: '/images/partners/Gtu.webp' },
-    { name: 'NVIDIA', logo: '/images/partners/nvidia.webp' },
-    { name: 'Startup India', logo: '/images/partners/startup.jpeg' },
+    { name: 'iHub', logo: './images/partners/ihub.png' },
+    { name: 'SSIP Gujarat', logo: './images/partners/ssip.png' },
+    { name: 'GTU Ventures', logo: './images/partners/Gtu.webp' },
+    { name: 'NVIDIA', logo: './images/partners/nvidia.webp' },
+    { name: 'Startup India', logo: './images/partners/startup.jpeg' },
   ];
 
   return (

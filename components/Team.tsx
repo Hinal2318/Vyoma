@@ -7,31 +7,31 @@ const Team: React.FC = () => {
     { 
       name: 'Jesa Kodiyatar', 
       role: 'Founder & CEO', 
-      image: '/images/team/jesa.jpg',
+      image: './images/team/jesa.jpg',
       linkedin: 'https://www.linkedin.com/in/jesa-kodiyatar-512774281?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
     },
     { 
       name: 'Muskaan Rughvani', 
       role: 'Co-Founder & CBO', 
-      image: '/images/team/muskan.jpeg',
+      image: './images/team/muskan.jpeg',
       linkedin: 'https://www.linkedin.com/in/muskaan-rughvani-773649297?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
     },
     { 
       name: 'Jatin Parmar', 
       role: 'CTO', 
-      image: '/images/team/jatin.jpg',
+      image: './images/team/jatin.jpg',
       linkedin: 'https://www.linkedin.com/in/jateenparmar?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
     },
     { 
       name: 'Krish Vaghela', 
       role: 'Backend Lead', 
-      image: '/images/team/krish.png',
+      image: './images/team/krish.png',
       linkedin: 'https://www.linkedin.com/in/krishvaghela1212?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
     },
     { 
       name: 'Arman Amaliya', 
       role: 'Frontend Lead', 
-      image: '/images/team/arman.jpg',
+      image: './images/team/arman.jpg',
       linkedin: 'https://www.linkedin.com/in/arman-amreliya-ab90132b5?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app'
     },
   ];

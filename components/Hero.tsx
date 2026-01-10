@@ -75,7 +75,7 @@ const Hero: React.FC = () => {
   const y1 = useTransform(scrollY, [0, 500], [0, 100]);
   const rotateValue = useTransform(scrollY, [0, 500], [0, 15]);
 
-  const curioLogoUrl = '/images/logos/curio.png';
+  const curioLogoUrl = './images/logos/curio.png';
 
   return (
     <div className="hero-section flex items-center overflow-hidden">

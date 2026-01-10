@@ -30,7 +30,7 @@ const About: React.FC = () => {
   ];
 
   // Local video file path
-  const videoSrc = '/images/about-video.mp4';
+  const videoSrc = './images/about-video.mp4';
 
   return (
     <div className="max-w-7xl mx-auto px-6">
