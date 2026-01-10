@@ -1,0 +1,155 @@
+/* Base styles for better visibility and proper rendering */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F9FAFC;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Ensure proper z-index stacking */
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 3D perspective effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Grid background pattern */
+.bg-grid {
+  background-image: radial-gradient(circle, #3B82F6 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.05;
+}
+
+/* Ensure text is always visible */
+.text-contrast {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero section specific styles */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F9FAFC 0%, #ffffff 100%);
+}
+
+/* Navbar backdrop blur support */
+.navbar-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Animation improvements */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Prevent layout shifts during typewriter animation */
+.typewriter-container {
+  min-height: 1.2em;
+  display: inline-block;
+  width: 100%;
+}
+
+.typewriter-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Stable hero title container */
+.hero-title {
+  min-height: 200px;
+  display: flex;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    min-height: 280px;
+  }
+}
+
+/* Ensure proper contrast for all text elements */
+.text-darkNavy {
+  color: #0F172A !important;
+}
+
+.text-deepBlue {
+  color: #1E3A8A !important;
+}
+
+.text-skyBlue {
+  color: #3B82F6 !important;
+}
+
+.text-mutedSlate {
+  color: #64748B !important;
+}
+
+/* Button background colors */
+.bg-deepBlue {
+  background-color: #1E3A8A !important;
+}
+
+.bg-skyBlue {
+  background-color: #3B82F6 !important;
+}
+
+.bg-softOrange {
+  background-color: #F97316 !important;
+}
+
+/* Hover states */
+.hover\:bg-blue-600:hover {
+  background-color: #2563EB !important;
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 80px;
+  }
+  
+  .navbar-fixed {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}

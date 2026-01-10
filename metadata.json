@@ -1,0 +1,8 @@
+{
+  "name": "Vyoma Learning Systems",
+  "description": "Premium EdTech business website for Vyoma Learning Systems Pvt. Ltd., featuring smooth animations, 3D effects, and a futuristic light theme.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
