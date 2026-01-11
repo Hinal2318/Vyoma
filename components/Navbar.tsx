@@ -53,11 +53,11 @@ const Navbar: React.FC = () => {
   return (
     <nav 
       className={`navbar-fixed transition-all duration-300 ${
-        scrolled ? 'py-4 bg-white/95 navbar-blur shadow-lg border-b border-gray-100/50' : 'py-6 bg-white/10 navbar-blur'
+        scrolled ? 'py-3 md:py-4 bg-white/95 navbar-blur shadow-lg border-b border-gray-100/50' : 'py-4 md:py-6 bg-white/10 navbar-blur'
       }`}
       style={{ zIndex: 1000 }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
         <motion.a 
           href="#home"
           initial={{ opacity: 0, x: -20 }}
@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
           </span>
         </motion.a>
 
-        <div className="hidden md:flex items-center space-x-7">
+        <div className="hidden md:flex items-center space-x-5 lg:space-x-7">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.slice(1);
             return (
@@ -105,10 +105,10 @@ const Navbar: React.FC = () => {
         </div>
 
         <button 
-          className="md:hidden text-darkNavy p-2"
+          className="md:hidden text-darkNavy p-2 hover:bg-gray-100 rounded-lg transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
@@ -118,10 +118,10 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-full left-0 right-0 bg-white/95 navbar-blur border-t border-gray-100 shadow-xl overflow-hidden"
+            className="md:hidden absolute top-full left-0 right-0 bg-white/95 navbar-blur border-t border-gray-100 shadow-xl overflow-hidden rounded-b-2xl mx-4"
             style={{ zIndex: 999 }}
           >
-            <div className="px-6 py-8 flex flex-col space-y-5">
+            <div className="px-4 py-6 flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <a 
                   key={link.name} 

@@ -11,13 +11,13 @@ const Partners: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6 text-center">
-      <h3 className="text-mutedSlate font-semibold text-sm uppercase tracking-[0.2em] mb-12">Trusted By & Partnered With</h3>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h3 className="text-mutedSlate font-semibold text-xs sm:text-sm uppercase tracking-[0.2em] mb-8 md:mb-12">Trusted By & Partnered With</h3>
       
-      <div className="relative overflow-hidden group py-6">
+      <div className="relative overflow-hidden group py-4 md:py-6">
         <div className="flex overflow-hidden">
           <motion.div 
-            className="flex items-center gap-16 md:gap-28 whitespace-nowrap"
+            className="partners-grid flex items-center gap-12 md:gap-16 lg:gap-28 whitespace-nowrap"
             animate={{ x: ["0%", "-50%"] }}
             transition={{ 
               duration: 35, 

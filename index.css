@@ -145,11 +145,139 @@ body {
 /* Mobile responsiveness improvements */
 @media (max-width: 768px) {
   .hero-section {
-    padding-top: 80px;
+    padding-top: 100px;
+    padding-bottom: 60px;
   }
   
   .navbar-fixed {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+  }
+
+  .hero-title {
+    min-height: 160px;
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .typewriter-container {
+    font-size: 2.5rem;
+  }
+
+  /* Modal improvements for mobile */
+  .modal-content {
+    margin: 1rem;
+    max-height: 85vh;
+    padding: 1.5rem;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .modal-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .modal-title {
+    font-size: 2rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.875rem;
+  }
+
+  /* Card improvements */
+  .product-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Team section mobile */
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .team-card {
+    padding: 1.5rem;
+  }
+
+  /* Partners section mobile */
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Vision mission mobile */
+  .vision-mission-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Contact form mobile */
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* FAQ mobile */
+  .faq-item {
+    padding: 1rem;
+  }
+
+  /* About section mobile */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-video {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    min-height: 140px;
+    font-size: 2rem;
+  }
+
+  .typewriter-container {
+    font-size: 2rem;
+  }
+
+  .modal-content {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .modal-title {
+    font-size: 1.75rem;
+  }
+
+  .partners-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card {
+    padding: 1rem;
   }
 }

@@ -37,11 +37,11 @@ const Team: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-        <div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-darkNavy mb-6">Meet Our Team</h2>
-          <p className="text-xl text-mutedSlate max-w-xl">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+        <div className="text-center md:text-left">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-darkNavy mb-4 md:mb-6">Meet Our Team</h2>
+          <p className="text-lg md:text-xl text-mutedSlate max-w-xl mx-auto md:mx-0">
             A diverse group of educators, engineers, and visionaries dedicated to transforming learning.
           </p>
         </div>
@@ -55,7 +55,7 @@ const Team: React.FC = () => {
         </motion.a>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div className="team-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
         {team.map((member, idx) => (
           <motion.div
             key={member.name}

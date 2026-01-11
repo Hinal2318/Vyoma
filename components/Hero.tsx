@@ -82,11 +82,12 @@ const Hero: React.FC = () => {
       <div className="absolute top-20 right-[-10%] w-[500px] h-[500px] bg-skyBlue/8 rounded-full blur-3xl animate-float" />
       <div className="absolute bottom-20 left-[-5%] w-[400px] h-[400px] bg-softOrange/8 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
 
-      <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 pb-20 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center lg:text-left"
         >
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -94,32 +95,32 @@ const Hero: React.FC = () => {
             transition={{ delay: 0.2 }}
             className="inline-block px-4 py-1.5 rounded-full bg-deepBlue/5 text-deepBlue font-semibold text-sm mb-6 border border-deepBlue/10"
           >
-            Next-Gen Learning Ecosystem
+            Future-Ready Learning Hub
           </motion.div>
           <h1 className="text-5xl md:text-7xl font-heading font-bold text-darkNavy leading-tight mb-8 text-contrast hero-title">
             <TypewriterText />
           </h1>
           <p className="text-xl text-mutedSlate mb-10 leading-relaxed max-w-lg text-contrast">
-            Vyoma Learning Systems Pvt. Ltd. creates connected EdTech platforms that empower learners from school to industry through AI, visualization, and real-world engagement.
+            Vyoma Learning Systems Pvt. Ltd. builds intelligent EdTech ecosystems that bridge classrooms and careers through AI and real-world engagements.
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start">
             <motion.a
               href="#products"
               whileHover={{ scale: 1.05, boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.4)' }}
               whileTap={{ scale: 0.95 }}
-              className="bg-skyBlue hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 group shadow-xl transition-colors"
+              className="bg-skyBlue hover:bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold flex items-center justify-center gap-2 group shadow-xl transition-colors text-sm sm:text-base"
             >
-              Explore Our Ecosystem
-              <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+              Step into Our World
+              <ChevronRight className="group-hover:translate-x-1 transition-transform" size={18} />
             </motion.a>
             <motion.a
               href="#vision"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-darkNavy border border-gray-200 px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-colors flex items-center gap-2"
+              className="bg-white text-darkNavy border border-gray-200 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
             >
-              <PlayCircle className="text-softOrange" />
-              Watch Vision
+              <PlayCircle className="text-softOrange" size={18} />
+              Witness the future
             </motion.a>
           </div>
         </motion.div>
@@ -141,7 +142,7 @@ const Hero: React.FC = () => {
                  <div className="mt-6">
                    <h3 className="text-darkNavy font-heading font-bold text-4xl mb-1">The</h3>
                    <h3 className="text-darkNavy font-heading font-bold text-4xl mb-2">Vyoma</h3>
-                   <h3 className="text-darkNavy font-heading font-bold text-4xl mb-3">Core</h3>
+                   <h3 className="text-darkNavy font-heading font-bold text-4xl mb-3">Sphere</h3>
                    <div className="h-0.5 w-12 bg-skyBlue mx-auto mb-3" />
                    <p className="text-mutedSlate text-sm font-medium">AI Powered Education</p>
                  </div>
