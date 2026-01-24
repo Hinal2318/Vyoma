@@ -143,14 +143,14 @@ const Products: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1001] flex items-start justify-center p-4 py-8 overflow-y-auto"
             onClick={() => setShowNovaDetails(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="modal-content bg-white rounded-3xl max-w-4xl max-h-[90vh] overflow-y-auto p-8 relative"
+              className="modal-content bg-white rounded-3xl max-w-4xl w-full my-8 modal-scroll p-8 relative shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -317,21 +317,6 @@ const Products: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl p-6 text-white text-center">
-                  <h3 className="text-2xl font-bold mb-3">✨ Call to Action</h3>
-                  <p className="text-lg mb-4">
-                    Discover Nova today — where learning meets innovation. Start your journey with clarity, curiosity, and confidence.
-                  </p>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowNovaDetails(false)}
-                    className="bg-white text-purple-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors"
-                  >
-                    Get Started with Nova
-                  </motion.button>
-                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -345,19 +330,19 @@ const Products: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1001] flex items-start justify-center p-4 py-8 overflow-y-auto"
             onClick={() => setShowCurioDetails(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-3xl max-w-4xl max-h-[90vh] overflow-y-auto p-8 relative"
+              className="bg-white rounded-3xl max-w-4xl w-full my-8 modal-scroll p-8 relative shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setShowCurioDetails(false)}
-                className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
               >
                 <X size={24} />
               </button>
@@ -524,31 +509,153 @@ const Products: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl p-6 text-white text-center">
-                  <h3 className="text-2xl font-bold mb-3">📌 Call to Action</h3>
-                  <p className="text-lg mb-4">
-                    Step into Curio — where science becomes clear, interactive, and exam‑ready. Master advanced concepts with confidence and curiosity.
-                  </p>
-                  <div className="flex gap-4 justify-center">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setShowCurioDetails(false)}
-                      className="bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors"
-                    >
-                      Learn More
-                    </motion.button>
-                    <motion.a
-                      href="https://curioteach.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-white/20 text-white px-6 py-3 rounded-full font-bold hover:bg-white/30 transition-colors flex items-center gap-2"
-                    >
-                      Visit Platform
-                      <ExternalLink size={18} />
-                    </motion.a>
+                {/* Subscription Plans Section */}
+                <div className="mb-8">
+                  <div className="bg-blue-600 rounded-t-2xl p-4 text-center">
+                    <h3 className="text-2xl font-bold text-white">SUBSCRIPTION PLAN</h3>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-3 gap-6 bg-gray-50 p-6 rounded-b-2xl">
+                    {/* Basic Plan */}
+                    <div className="bg-blue-600 rounded-2xl overflow-hidden shadow-lg">
+                      <div className="bg-orange-500 text-white text-center py-3">
+                        <h4 className="font-bold text-lg">BASIC</h4>
+                      </div>
+                      <div className="bg-blue-600 text-white p-4">
+                        <div className="bg-orange-500 inline-block px-4 py-2 rounded-lg mb-4">
+                          <span className="text-2xl font-bold">Rs.69</span>
+                          <span className="text-sm">/Month</span>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>3D/AR Models</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Topic Quiz</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Basic Analysis</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Technical Support</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Standard Plan */}
+                    <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+                      <div className="bg-orange-500 text-white text-center py-3">
+                        <h4 className="font-bold text-lg">STANDARD</h4>
+                      </div>
+                      <div className="bg-blue-600 text-white p-4">
+                        <div className="bg-orange-500 inline-block px-4 py-2 rounded-lg mb-4">
+                          <span className="text-2xl font-bold">Rs.149</span>
+                          <span className="text-sm">/Month</span>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>3D/AR Models</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Topic Quiz</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Test Quiz</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>AI Chat Bot</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Student Analysis Dashboard</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Technical Support</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Pro Plan */}
+                    <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+                      <div className="bg-orange-500 text-white text-center py-3">
+                        <h4 className="font-bold text-lg">PRO</h4>
+                      </div>
+                      <div className="bg-blue-600 text-white p-4">
+                        <div className="bg-orange-500 inline-block px-4 py-2 rounded-lg mb-4">
+                          <span className="text-2xl font-bold">Rs.299</span>
+                          <span className="text-sm">/Month</span>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>3D/AR Models</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Topic/Test Quiz</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>AI Voice Assistant</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>AI Chat Bot</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Advance Analysis Student Dashboard</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            </div>
+                            <span>Technical Support</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -564,19 +671,19 @@ const Products: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1001] flex items-start justify-center p-4 py-8 overflow-y-auto"
             onClick={() => setShowVibeDetails(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-3xl max-w-4xl max-h-[90vh] overflow-y-auto p-8 relative"
+              className="bg-white rounded-3xl max-w-4xl w-full my-8 modal-scroll p-8 relative shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setShowVibeDetails(false)}
-                className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors z-10"
               >
                 <X size={24} />
               </button>
@@ -744,22 +851,6 @@ const Products: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 text-white text-center">
-                  <h3 className="text-2xl font-bold mb-3">📌 Call to Action</h3>
-                  <p className="text-lg mb-4">
-                    Experience Vibe — where students meet opportunities and startups find talent. 
-                    Internships made simple, impactful, and future‑ready.
-                  </p>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowVibeDetails(false)}
-                    className="bg-white text-orange-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors"
-                  >
-                    Join the Vibe Community
-                  </motion.button>
                 </div>
               </div>
             </motion.div>

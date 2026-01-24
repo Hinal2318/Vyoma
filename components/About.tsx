@@ -1,34 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, Award, Briefcase, Zap } from 'lucide-react';
-
-const CountUp: React.FC<{ end: number; duration?: number; suffix?: string }> = ({ end, duration = 2, suffix = "" }) => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let startTimestamp: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
-      setCount(Math.floor(progress * end));
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    window.requestAnimationFrame(step);
-  }, [end, duration]);
-
-  return <span>{count}{suffix}</span>;
-};
+import { Users } from 'lucide-react';
 
 const About: React.FC = () => {
-  const stats = [
-    { label: 'Learners Empowered', value: 10000, suffix: '+', icon: <Users /> },
-    { label: 'Platform Uptime', value: 99, suffix: '%', icon: <Zap /> },
-    { label: 'Partner Schools', value: 50, suffix: '+', icon: <Award /> },
-    { label: 'Career Outcomes', value: 85, suffix: '%', icon: <Briefcase /> },
-  ];
-
   // Local video file path
   const videoSrc = './images/about-video.mp4';
 
@@ -50,18 +24,6 @@ const About: React.FC = () => {
           <p className="text-lg text-mutedSlate mb-12">
             Our approach integrates deep cognitive science with cutting-edge technology to ensure that knowledge isn't just consumed—it's mastered.
           </p>
-          
-          <div className="grid grid-cols-2 gap-8">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col">
-                <div className="text-deepBlue mb-2">{stat.icon}</div>
-                <div className="text-3xl font-heading font-bold text-darkNavy">
-                  <CountUp end={stat.value} suffix={stat.suffix} />
-                </div>
-                <div className="text-sm text-mutedSlate font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </motion.div>
 
         <motion.div
