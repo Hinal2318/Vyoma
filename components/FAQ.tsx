@@ -1,34 +1,83 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+
+// ── Vyoma Palette ─────────────────────────────────────────────────────────────
+// --vyoma-navy:    #1a2b5e   --vyoma-blue:    #4A6CF7
+// --vyoma-purple:  #7C3AED   --vyoma-orange:  #F97316
+// --vyoma-bg:      #f0f4ff   --vyoma-surface: #ffffff
+// --vyoma-body:    #5a6a8a   --vyoma-muted:   #8a9ab0
+// --vyoma-border:  rgba(26,43,94,0.08)
 
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-gray-100 last:border-0">
-      <button 
-        className="w-full py-6 flex items-center justify-between text-left group"
+    <div style={{ borderBottom: '1px solid rgba(26,43,94,0.08)' }} className="last:border-0">
+      <button
         onClick={() => setIsOpen(!isOpen)}
+        style={{
+          width: '100%',
+          padding: '24px 0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          textAlign: 'left',
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          gap: 16,
+        }}
       >
-        <span className="text-xl font-semibold text-darkNavy group-hover:text-skyBlue transition-colors">{question}</span>
+        <span
+          style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: 18,
+            fontWeight: 600,
+            color: isOpen ? '#4A6CF7' : '#1a2b5e',
+            transition: 'color 0.2s',
+            lineHeight: 1.4,
+          }}
+          onMouseEnter={e => { if (!isOpen) (e.currentTarget as HTMLElement).style.color = '#4A6CF7'; }}
+          onMouseLeave={e => { if (!isOpen) (e.currentTarget as HTMLElement).style.color = '#1a2b5e'; }}
+        >
+          {question}
+        </span>
+
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          className="text-mutedSlate"
+          transition={{ duration: 0.2 }}
+          style={{
+            color: isOpen ? '#4A6CF7' : '#8a9ab0',
+            flexShrink: 0,
+            width: 28, height: 28,
+            borderRadius: '50%',
+            background: isOpen ? 'rgba(74,108,247,0.08)' : 'transparent',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 0.2s, color 0.2s',
+          }}
         >
-          <ChevronDown />
+          <ChevronDown size={18} />
         </motion.div>
       </button>
-      <AnimatePresence>
+
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            style={{ overflow: 'hidden' }}
           >
-            <p className="pb-6 text-mutedSlate leading-relaxed text-lg">
+            <p style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 16,
+              color: '#5a6a8a',
+              lineHeight: 1.75,
+              paddingBottom: 24,
+              paddingRight: 40,
+            }}>
               {answer}
             </p>
           </motion.div>
@@ -44,20 +93,69 @@ const FAQ: React.FC = () => {
     { question: "What products do you offer?", answer: "We offer Nova (foundations for classes 9-10), Curio (science immersive for classes 11-12), and Vibe (industry connection and internships for higher education)." },
     { question: "Who can use the platforms?", answer: "Our platforms are designed for individual students, educational institutions, and corporate partners looking to hire vetted talent." },
     { question: "How does AI enhance learning on your platforms?", answer: "We use AI for personalized learning paths, smart assessments, virtual tutoring, and matching students to the best-fit industry opportunities based on their skill growth." },
-    { question: "Can institutions partner with Vyoma?", answer: "Yes! We work with schools and universities to integrate our platforms into their curriculum and offer better outcomes for their students." }
+    { question: "Can institutions partner with Vyoma?", answer: "Yes! We work with schools and universities to integrate our platforms into their curriculum and offer better outcomes for their students." },
   ];
 
   return (
     <div className="max-w-4xl mx-auto px-6">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-heading font-bold text-darkNavy mb-4">Frequently Asked Questions</h2>
-        <p className="text-mutedSlate text-lg">Everything you need to know about Vyoma.</p>
+
+      {/* ── Section header ── */}
+      <div style={{ textAlign: 'center', marginBottom: 64 }}>
+        <div style={{
+          display: 'inline-block',
+          padding: '6px 16px',
+          borderRadius: 999,
+          background: 'rgba(74,108,247,0.07)',
+          color: '#4A6CF7',
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: 600,
+          fontSize: 13,
+          border: '1px solid rgba(74,108,247,0.15)',
+          marginBottom: 16,
+        }}>
+          Got Questions?
+        </div>
+        <h2 style={{
+          fontFamily: "'Poppins', sans-serif",
+          fontSize: 'clamp(28px, 4vw, 44px)',
+          fontWeight: 700,
+          color: '#1a2b5e',
+          marginBottom: 12,
+        }}>
+          Frequently Asked Questions
+        </h2>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 17,
+          color: '#5a6a8a',
+          lineHeight: 1.6,
+        }}>
+          Everything you need to know about Vyoma.
+        </p>
       </div>
-      <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-xl shadow-gray-100">
+
+      {/* ── FAQ card ── */}
+      <div style={{
+        background: '#ffffff',
+        borderRadius: 32,
+        padding: '8px 40px',
+        border: '1px solid rgba(26,43,94,0.08)',
+        boxShadow: '0 8px 40px rgba(26,43,94,0.07)',
+      }}>
+        {/* Accent bar */}
+        <div style={{
+          height: 4,
+          width: 56,
+          borderRadius: 99,
+          background: 'linear-gradient(to right, #1a2b5e, #4A6CF7)',
+          margin: '28px 0 8px',
+        }} />
+
         {faqs.map((faq, idx) => (
           <FAQItem key={idx} {...faq} />
         ))}
       </div>
+
     </div>
   );
 };

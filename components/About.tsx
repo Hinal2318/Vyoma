@@ -1,73 +1,373 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users } from 'lucide-react';
+import { Users, Zap, BookOpen, Award, ArrowRight } from 'lucide-react';
 
 const About: React.FC = () => {
-  // Local video file path
   const videoSrc = './images/about-video.mp4';
+  const [hoveredStat, setHoveredStat] = useState<number | null>(null);
+
+  const stats = [
+    { icon: <Users size={18} strokeWidth={2} />, value: '50K+', label: 'Learners', color: '#4A6CF7', bg: 'rgba(74,108,247,0.08)' },
+    { icon: <Zap size={18} strokeWidth={2} />, value: '3', label: 'AI Products', color: '#7C3AED', bg: 'rgba(124,58,237,0.08)' },
+    { icon: <BookOpen size={18} strokeWidth={2} />, value: '200+', label: 'Courses', color: '#F97316', bg: 'rgba(249,115,22,0.08)' },
+    { icon: <Award size={18} strokeWidth={2} />, value: '98%', label: 'Satisfaction', color: '#0ea5e9', bg: 'rgba(14,165,233,0.08)' },
+  ];
+
+  const pills = ['AI-Driven', 'Cognitive Science', 'EdTech', 'Deep Learning'];
 
   return (
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+          gap: 'clamp(40px, 6vw, 80px)',
+          alignItems: 'center',
+        }}
+      >
+
+        {/* ── LEFT: Text ── */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 0 }}
         >
-          <div className="text-skyBlue font-bold uppercase tracking-widest text-sm mb-4">Infrastructure for Education</div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-darkNavy mb-8 leading-tight">
-            More than just courses. We build the <span className="text-deepBlue">future infrastructure</span> of digital learning.
-          </h2>
-          <p className="text-xl text-mutedSlate mb-8 leading-relaxed">
-            Vyoma Learning Systems Pvt. Ltd. is an EdTech company focused on building learning infrastructure, not just digital courses. We blend education, AI, and design to create platforms that support learners at every stage of their journey.
-          </p>
-          <p className="text-lg text-mutedSlate mb-12">
-            Our approach integrates deep cognitive science with cutting-edge technology to ensure that knowledge isn't just consumed—it's mastered.
-          </p>
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            style={{ marginBottom: 16 }}
+          >
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
+              textTransform: 'uppercase', color: '#4A6CF7',
+              background: 'rgba(74,108,247,0.08)',
+              padding: '6px 14px', borderRadius: 999,
+              border: '1px solid rgba(74,108,247,0.14)',
+            }}>
+              Infrastructure for Education
+            </span>
+          </motion.div>
+
+          {/* Heading */}
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.18 }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(27px, 4vw, 47px)',
+              fontWeight: 800,
+              color: '#1a2b5e',
+              lineHeight: 1.12,
+              margin: '0 0 22px',
+              letterSpacing: '-0.04em',
+            }}
+          > More than just courses.
+            <br className="hidden sm:block" />
+            We build the{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #7C3AED, #4A6CF7)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              future infrastructure
+            </span>{' '}
+            of digital learning.
+          </motion.h2>
+
+          {/* Primary paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.26 }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(15px, 1.6vw, 17px)',
+              color: '#5a6a8a',
+              lineHeight: 1.78,
+              margin: '0 0 16px',
+            }}
+          >
+            Vyoma Learning Systems Pvt. Ltd. is an EdTech company focused on building
+            learning infrastructure, not just digital courses. We blend education, AI,
+            and design to create platforms that support learners at every stage of their journey.
+          </motion.p>
+
+          {/* Secondary paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.32 }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(14px, 1.4vw, 16px)',
+              color: '#6b7a90',
+              lineHeight: 1.78,
+              margin: '0 0 28px',
+            }}
+          >
+            Our approach integrates deep cognitive science with cutting-edge technology
+            to ensure that knowledge isn't just consumed—it's mastered.
+          </motion.p>
+
+          {/* Keyword pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.38 }}
+            style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}
+          >
+            {pills.map((p, i) => (
+              <span key={i} style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 12, fontWeight: 600,
+                color: '#1a2b5e',
+                background: 'rgba(26,43,94,0.06)',
+                border: '1px solid rgba(26,43,94,0.10)',
+                padding: '5px 13px', borderRadius: 999,
+                letterSpacing: '-0.01em',
+              }}>
+                {p}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Accent divider */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.44, duration: 0.6 }}
+            style={{
+              height: 3, width: 56, borderRadius: 99,
+              background: 'linear-gradient(90deg, #1a2b5e, #4A6CF7)',
+              transformOrigin: 'left',
+              marginBottom: 36,
+            }}
+          />
+
+          {/* Stats grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.50 }}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: 12,
+            }}
+          >
+            {stats.map((s, i) => (
+              <motion.div
+                key={i}
+                onMouseEnter={() => setHoveredStat(i)}
+                onMouseLeave={() => setHoveredStat(null)}
+                animate={{
+                  y: hoveredStat === i ? -4 : 0,
+                  boxShadow: hoveredStat === i
+                    ? '0 12px 32px rgba(26,43,94,0.12)'
+                    : '0 2px 10px rgba(26,43,94,0.06)',
+                }}
+                transition={{ duration: 0.25 }}
+                style={{
+                  background: '#ffffff',
+                  borderRadius: 16,
+                  padding: '16px 18px',
+                  border: '1px solid rgba(26,43,94,0.07)',
+                  cursor: 'default',
+                  display: 'flex', alignItems: 'center', gap: 12,
+                }}
+              >
+                <div style={{
+                  width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                  background: s.bg, color: s.color,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  {s.icon}
+                </div>
+                <div>
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 20, fontWeight: 800, color: '#1a2b5e',
+                    letterSpacing: '-0.04em', lineHeight: 1,
+                  }}>
+                    {s.value}
+                  </div>
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 11, fontWeight: 600, color: '#8a9ab0',
+                    letterSpacing: '0.05em', textTransform: 'uppercase', marginTop: 2,
+                  }}>
+                    {s.label}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
         </motion.div>
 
+        {/* ── RIGHT: Video ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.94 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative"
+          transition={{ duration: 0.7, delay: 0.2 }}
+          style={{ position: 'relative' }}
         >
-          <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl bg-gray-100 aspect-[4/5] border-8 border-white group">
-            <video 
+          {/* Glow blobs */}
+          <div style={{
+            position: 'absolute', top: -40, left: -30, width: 180, height: 180,
+            borderRadius: '50%', background: 'rgba(249,115,22,0.14)', filter: 'blur(50px)',
+            pointerEvents: 'none',
+          }} />
+          <div style={{
+            position: 'absolute', bottom: -40, right: -30, width: 220, height: 220,
+            borderRadius: '50%', background: 'rgba(74,108,247,0.14)', filter: 'blur(50px)',
+            pointerEvents: 'none',
+          }} />
+
+          {/* Video card */}
+          <div
+            className="relative z-10"
+            style={{
+              aspectRatio: '4/5',
+              borderRadius: '2.5rem',
+              overflow: 'hidden',
+              boxShadow: '0 40px 80px rgba(26,43,94,0.16)',
+              border: '6px solid #ffffff',
+              background: '#e8edf8',
+            }}
+          >
+            <video
               src={videoSrc}
               className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
+              autoPlay loop muted playsInline preload="auto"
               title="About Vyoma Video"
             >
               Your browser does not support the video tag.
             </video>
-            
-            {/* Subtle Overlay */}
-            <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-[2.25rem]" />
+
+            {/* Inner border overlay */}
+            <div style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none',
+              borderRadius: '2.25rem',
+              border: '1px solid rgba(26,43,94,0.06)',
+            }} />
+
+            {/* Branded corner badge */}
+            <div style={{
+              position: 'absolute', top: 20, left: 20,
+              background: 'rgba(26,43,94,0.82)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 12, padding: '8px 14px',
+              display: 'flex', alignItems: 'center', gap: 6,
+            }}>
+              <div style={{
+                width: 7, height: 7, borderRadius: '50%',
+                background: '#F97316',
+                boxShadow: '0 0 8px rgba(249,115,22,0.8)',
+              }} />
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 11, fontWeight: 700, color: '#fff',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+              }}>Live</span>
+            </div>
           </div>
 
-          <div className="absolute -top-10 -left-10 w-40 h-40 bg-softOrange/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-skyBlue/20 rounded-full blur-3xl" />
-          
+          {/* Floating badge */}
           <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
-            className="absolute top-1/2 -right-12 bg-white p-6 rounded-2xl shadow-2xl hidden md:block z-20 border border-gray-100"
+            animate={{ y: [0, -14, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              position: 'absolute', top: '42%', right: -20,
+              background: '#ffffff',
+              padding: '16px 20px',
+              borderRadius: 18,
+              boxShadow: '0 20px 48px rgba(26,43,94,0.14)',
+              border: '1px solid rgba(26,43,94,0.08)',
+              zIndex: 20,
+            }}
+            className="hidden md:block"
           >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
-                <Users size={24} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: '50%',
+                background: 'rgba(74,108,247,0.10)', color: '#4A6CF7',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              }}>
+                <Users size={20} />
               </div>
               <div>
-                <div className="font-bold text-darkNavy">AI Mentorship</div>
-                <div className="text-xs text-mutedSlate">Active on Nova/Curio</div>
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 700, fontSize: 13, color: '#1a2b5e',
+                }}>
+                  AI Mentorship
+                </div>
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 11, color: '#8a9ab0', marginTop: 1,
+                }}>
+                  Active on Nova/Curio
+                </div>
               </div>
             </div>
           </motion.div>
+
+          {/* Second floating badge — bottom left */}
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+            style={{
+              position: 'absolute', bottom: '14%', left: -18,
+              background: '#1a2b5e',
+              padding: '14px 18px',
+              borderRadius: 16,
+              boxShadow: '0 16px 40px rgba(26,43,94,0.28)',
+              zIndex: 20,
+            }}
+            className="hidden md:block"
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: 10,
+                background: 'rgba(249,115,22,0.18)', color: '#F97316',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              }}>
+                <Zap size={17} />
+              </div>
+              <div>
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 700, fontSize: 12, color: '#fff',
+                }}>
+                  Powered by AI
+                </div>
+                <div style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 10, color: 'rgba(255,255,255,0.55)', marginTop: 1,
+                }}>
+                  Nova · Curio · Vibe
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
         </motion.div>
       </div>
     </div>
