@@ -143,13 +143,69 @@ const ProductCard: React.FC<ProductCardProps> = ({
   </motion.div>
 );
 
+// ── 3D Orbital Ring — tilted CSS 3D plane ─────────────────────────────────────
+const OrbitalRing: React.FC<{
+  diameter: number;
+  rotateX: number;
+  rotateZ: number;
+  color: string;
+  opacity: number;
+  animDuration: number;
+  dashed?: boolean;
+}> = ({ diameter, rotateX, rotateZ, color, opacity, animDuration, dashed }) => (
+  <motion.div
+    animate={{ rotateY: 360 }}
+    transition={{ duration: animDuration, repeat: Infinity, ease: 'linear' }}
+    style={{
+      position: 'absolute',
+      width: diameter, height: diameter,
+      borderRadius: '50%',
+      border: `1.5px ${dashed ? 'dashed' : 'solid'} ${color}`,
+      opacity,
+      transformStyle: 'preserve-3d',
+      transform: `rotateX(${rotateX}deg) rotateZ(${rotateZ}deg)`,
+      pointerEvents: 'none',
+    }}
+  />
+);
+
+// ── Floating molecule dot ──────────────────────────────────────────────────────
+const MoleculeDot: React.FC<{
+  size: number; color: string; top: string; left: string;
+  delay: number; blur?: number;
+}> = ({ size, color, top, left, delay, blur = 0 }) => (
+  <motion.div
+    animate={{ y: [0, -10, 0], opacity: [0.7, 1, 0.7], scale: [1, 1.15, 1] }}
+    transition={{ duration: 3.5 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
+    style={{
+      position: 'absolute', width: size, height: size, borderRadius: '50%',
+      background: color, top, left,
+      filter: blur ? `blur(${blur}px)` : undefined,
+      boxShadow: `0 0 ${size * 2}px ${color}88`,
+      zIndex: 8,
+    }}
+  />
+);
+
 // ── VyomaSphere — responsive size via prop ─────────────────────────────────────
 const VyomaSphere: React.FC<{ size: number }> = ({ size }) => {
-  // Scale everything relative to the container size
   const scale = size / 580;
-  const darkCircle = Math.round(200 * scale);
-  const orbitR = Math.round(210 * scale);
-  const rings = [520, 400, 285].map(r => Math.round(r * scale));
+  const sphereD  = Math.round(200 * scale);   // core sphere diameter
+  const orbitR   = Math.round(210 * scale);   // product-card orbit radius
+
+  // Ring diameters
+  const ring1 = Math.round(500 * scale);
+  const ring2 = Math.round(390 * scale);
+  const ring3 = Math.round(280 * scale);
+
+  // Molecule dot sizes
+  const dotLg = Math.round(12 * scale);
+  const dotMd = Math.round(8  * scale);
+  const dotSm = Math.round(5  * scale);
+
+  // Specular highlight & shadow sizes
+  const specW = Math.round(70 * scale);
+  const specH = Math.round(40 * scale);
 
   return (
     <div
@@ -158,28 +214,102 @@ const VyomaSphere: React.FC<{ size: number }> = ({ size }) => {
         width: size, height: size,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         flexShrink: 0,
+        perspective: size * 2.2,          // CSS 3D perspective on container
+        perspectiveOrigin: '50% 45%',
       }}
     >
-      {/* Concentric rings */}
-      {rings.map((s, i) => (
-        <div key={i} style={{
-          position: 'absolute', width: s, height: s,
-          borderRadius: '50%',
-          border: `1px solid rgba(74,108,247,${0.22 - i * 0.05})`,
-        }} />
-      ))}
-
-      {/* Dark sphere body */}
+      {/* ── Ambient glow behind everything ── */}
       <div style={{
         position: 'absolute',
-        width: darkCircle, height: darkCircle,
+        width: Math.round(320 * scale), height: Math.round(320 * scale),
         borderRadius: '50%',
-        background: 'radial-gradient(circle at 38% 32%, #2e4070, #0d1a35)',
-        boxShadow: '0 16px 48px rgba(13,26,53,0.50)',
-        zIndex: 4,
+        background: 'radial-gradient(circle, rgba(74,108,247,0.18) 0%, rgba(124,58,237,0.10) 40%, transparent 70%)',
+        filter: 'blur(32px)',
+        zIndex: 0,
       }} />
 
-      {/* Centre text — directly on the dark circle */}
+      {/* ── 3D tilted orbital rings ── */}
+      {/* Outermost — nearly horizontal, slow */}
+      <OrbitalRing diameter={ring1} rotateX={72} rotateZ={-18} color="rgba(74,108,247,0.70)" opacity={1} animDuration={28} />
+      {/* Middle — medium tilt */}
+      <OrbitalRing diameter={ring2} rotateX={55} rotateZ={30}  color="rgba(124,58,237,0.75)" opacity={1} animDuration={20} dashed />
+      {/* Inner — steep tilt, fastest */}
+      <OrbitalRing diameter={ring3} rotateX={20} rotateZ={60}  color="rgba(249,115,22,0.70)" opacity={1} animDuration={14} />
+
+      {/* ── Core sphere — deeply lit ── */}
+      <div style={{
+        position: 'absolute',
+        width: sphereD, height: sphereD,
+        borderRadius: '50%',
+        // Multi-layer radial gradient for 3D depth: bright top-left highlight, dark lower-right
+        background: `
+          radial-gradient(circle at 30% 28%, rgba(120,160,255,0.55) 0%, transparent 38%),
+          radial-gradient(circle at 68% 72%, rgba(0,0,0,0.55) 0%, transparent 45%),
+          radial-gradient(circle at 38% 32%, #2e4a8a 0%, #1a3060 28%, #0d1a3a 58%, #060e1f 100%)
+        `,
+        boxShadow: `
+          0 ${Math.round(24 * scale)}px ${Math.round(60 * scale)}px rgba(6,14,31,0.70),
+          0 ${Math.round(4 * scale)}px ${Math.round(16 * scale)}px rgba(74,108,247,0.30),
+          inset 0 ${Math.round(-8 * scale)}px ${Math.round(20 * scale)}px rgba(0,0,0,0.50),
+          inset 0 ${Math.round(6 * scale)}px ${Math.round(18 * scale)}px rgba(100,140,255,0.20)
+        `,
+        zIndex: 4,
+        overflow: 'hidden',
+      }}>
+        {/* Inner rim light — top edge */}
+        <div style={{
+          position: 'absolute', top: 0, left: '15%', right: '15%', height: '35%',
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(140,180,255,0.28) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }} />
+        {/* Specular highlight — small bright spot top-left */}
+        <div style={{
+          position: 'absolute',
+          width: specW, height: specH,
+          top: `${Math.round(14 * scale)}px`, left: `${Math.round(22 * scale)}px`,
+          background: 'radial-gradient(ellipse, rgba(200,220,255,0.70) 0%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(2px)',
+          transform: 'rotate(-20deg)',
+        }} />
+        {/* Secondary micro-highlight */}
+        <div style={{
+          position: 'absolute',
+          width: Math.round(14 * scale), height: Math.round(9 * scale),
+          top: `${Math.round(26 * scale)}px`, left: `${Math.round(44 * scale)}px`,
+          background: 'rgba(255,255,255,0.55)',
+          borderRadius: '50%',
+          filter: 'blur(1px)',
+        }} />
+        {/* Surface grid lines — latitude/longitude feel */}
+        <svg
+          width="100%" height="100%"
+          viewBox="0 0 100 100"
+          style={{ position: 'absolute', inset: 0, opacity: 0.10 }}
+        >
+          {/* Latitude lines */}
+          {[25, 40, 50, 60, 75].map(y => (
+            <ellipse key={y} cx="50" cy={y} rx="50" ry="5" fill="none" stroke="rgba(150,190,255,1)" strokeWidth="0.4" />
+          ))}
+          {/* Longitude lines */}
+          {[20, 35, 50, 65, 80].map(x => (
+            <ellipse key={x} cx={x} cy="50" rx="4" ry="50" fill="none" stroke="rgba(150,190,255,1)" strokeWidth="0.4" />
+          ))}
+        </svg>
+      </div>
+
+      {/* Drop shadow disc beneath sphere */}
+      <div style={{
+        position: 'absolute',
+        width: Math.round(170 * scale), height: Math.round(30 * scale),
+        bottom: `${Math.round(80 * scale)}px`,
+        borderRadius: '50%',
+        background: 'rgba(6,14,31,0.30)',
+        filter: 'blur(18px)',
+        zIndex: 2,
+      }} />
+
+      {/* ── Centre text — on the dark sphere ── */}
       <div style={{
         position: 'absolute', zIndex: 6,
         textAlign: 'center', userSelect: 'none', pointerEvents: 'none',
@@ -229,7 +359,7 @@ const VyomaSphere: React.FC<{ size: number }> = ({ size }) => {
         </div>
       </div>
 
-      {/* Orbiting cards */}
+      {/* ── Orbiting product cards ── */}
       <ProductCard label="Nova"  subtitle="AI Guidance" orbitRadius={orbitR} startAngleDeg={270} duration={18} iconBg="rgba(74,108,247,0.11)"  iconEl={<NovaIcon />}  />
       <ProductCard label="Curio" subtitle="Cognitive"   orbitRadius={orbitR} startAngleDeg={150} duration={18} iconBg="rgba(124,58,237,0.09)"  iconEl={<CurioIcon />} />
       <ProductCard label="Vibe"  subtitle="Network"     orbitRadius={orbitR} startAngleDeg={30}  duration={18} iconBg="rgba(192,38,211,0.08)"  iconEl={<VibeIcon />}  />

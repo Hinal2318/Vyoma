@@ -7,6 +7,26 @@ import {
 } from 'lucide-react';
 
 // ─────────────────────────────────────────────────────────────────────────────
+// SCROLL ANIMATION HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+const StaggerWords = ({ text, delay = 0 }: { text: string; delay?: number }) => (
+  <span style={{ display: 'inline' }}>
+    {text.split(' ').map((word, i) => (
+      <motion.span
+        key={i}
+        initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
+        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        viewport={{ once: false, margin: '-60px' }}
+        transition={{ duration: 0.45, delay: delay + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: 'inline-block', marginRight: '0.28em' }}
+      >
+        {word}
+      </motion.span>
+    ))}
+  </span>
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
 // SHARED MINI-UI ATOMS
 // ─────────────────────────────────────────────────────────────────────────────
 const MiniChip = ({ label, color, bg }: { label: string; color: string; bg: string }) => (
@@ -407,6 +427,148 @@ const ProductTour: React.FC<{ productId: string }> = ({ productId }) => {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// QR CODE SECTION — opens a fixed full-screen overlay, card size unchanged
+// ─────────────────────────────────────────────────────────────────────────────
+const QRSection: React.FC<{ url: string; accentColor: string; productName: string }> = ({ url, accentColor, productName }) => {
+  const [open, setOpen] = useState(false);
+  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}&color=0f1923&bgcolor=ffffff&margin=8`;
+  const domain = url.replace(/https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+
+  return (
+    <>
+      {/* Trigger button — sits on the card, zero height impact */}
+      <div style={{ marginBottom: 16 }} onClick={e => e.stopPropagation()}>
+        <button
+          onClick={e => { e.stopPropagation(); setOpen(true); }}
+          style={{
+            width: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '9px 14px',
+            borderRadius: 12,
+            border: `1.5px solid ${accentColor}35`,
+            background: `${accentColor}08`,
+            cursor: 'pointer',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 12, fontWeight: 700,
+            color: accentColor,
+            transition: 'background 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = `${accentColor}18`)}
+          onMouseLeave={e => (e.currentTarget.style.background = `${accentColor}08`)}
+        >
+          <span style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/>
+              <rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/>
+              <rect x="18" y="18" width="3" height="3"/>
+            </svg>
+            Scan QR to Visit
+          </span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      {/* Fixed overlay — rendered via portal-like z-index, completely outside card flow */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setOpen(false)}
+            style={{
+              position: 'fixed', inset: 0,
+              background: 'rgba(10,18,35,0.72)',
+              backdropFilter: 'blur(12px)',
+              zIndex: 2000,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.85, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 340 }}
+              onClick={e => e.stopPropagation()}
+              style={{
+                background: '#fff',
+                borderRadius: 28,
+                padding: '32px 28px 28px',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
+                boxShadow: '0 32px 80px rgba(10,18,35,0.28)',
+                position: 'relative', minWidth: 280,
+              }}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setOpen(false)}
+                style={{
+                  position: 'absolute', top: 14, right: 14,
+                  width: 32, height: 32, borderRadius: '50%',
+                  background: 'rgba(15,25,35,0.06)', border: 'none',
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#6b7a90',
+                }}
+              >
+                <X size={16} />
+              </button>
+
+              {/* Header */}
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  padding: '4px 12px', borderRadius: 999,
+                  background: `${accentColor}12`, marginBottom: 6,
+                }}>
+                  <div style={{ width: 6, height: 6, borderRadius: '50%', background: accentColor }} />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, fontWeight: 700, color: accentColor, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{productName}</span>
+                </div>
+                <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, fontWeight: 800, color: '#0f1923', margin: 0, letterSpacing: '-0.03em' }}>
+                  Scan to Open
+                </h3>
+              </div>
+
+              {/* QR Code */}
+              <div style={{
+                padding: 12, background: '#fff', borderRadius: 18,
+                boxShadow: `0 0 0 1.5px ${accentColor}20, 0 8px 32px ${accentColor}18`,
+              }}>
+                <img
+                  src={qrSrc}
+                  alt={`QR Code for ${domain}`}
+                  width={180} height={180}
+                  style={{ display: 'block', borderRadius: 8 }}
+                />
+              </div>
+
+              {/* Footer text */}
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: '#8a9ab0', margin: '0 0 4px', lineHeight: 1.6 }}>
+                  Point your camera at the QR code
+                </p>
+                <a
+                  href={url} target="_blank" rel="noopener noreferrer"
+                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, fontWeight: 700, color: accentColor, textDecoration: 'none' }}
+                >
+                  {domain}
+                </a>
+              </div>
+
+              {/* Tap to close hint */}
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: '#b0bac8', margin: 0 }}>
+                Tap anywhere outside to close
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // MAIN PRODUCTS COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 const Products: React.FC = () => {
@@ -529,6 +691,25 @@ const Products: React.FC = () => {
     </AnimatePresence>
   );
 
+  // Floating bubbles — outside cards, in section background
+  const sectionBubbles = [
+    // Blue (Nova) — left side
+    { size: 13, top: '8%',  left: '1%',  color: '#4A6CF7', delay: 0,   duration: 7 },
+    { size: 9,  top: '28%', left: '4%',  color: '#4A6CF7', delay: 1.3, duration: 8.5 },
+    { size: 11, top: '52%', left: '0.5%',color: '#4A6CF7', delay: 0.6, duration: 6.8 },
+    { size: 8,  top: '74%', left: '3%',  color: '#4A6CF7', delay: 2,   duration: 9 },
+    // Purple (Curio) — center-top & center-bottom
+    { size: 10, top: '2%',  left: '40%', color: '#7C3AED', delay: 0.8, duration: 7.5 },
+    { size: 7,  top: '2%',  left: '57%', color: '#7C3AED', delay: 1.6, duration: 8 },
+    { size: 9,  top: '96%', left: '43%', color: '#7C3AED', delay: 0.4, duration: 7 },
+    { size: 7,  top: '96%', left: '55%', color: '#7C3AED', delay: 1.9, duration: 9 },
+    // Orange (Vibe) — right side
+    { size: 12, top: '10%', left: '94%', color: '#F97316', delay: 0.3, duration: 7.2 },
+    { size: 9,  top: '32%', left: '97%', color: '#F97316', delay: 1.5, duration: 8.8 },
+    { size: 11, top: '58%', left: '92%', color: '#F97316', delay: 0.7, duration: 6.5 },
+    { size: 8,  top: '79%', left: '96%', color: '#F97316', delay: 2.1, duration: 9.2 },
+  ];
+
   return (
     <>
       <style>{`
@@ -550,34 +731,69 @@ const Products: React.FC = () => {
         }
       `}</style>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px' }}>
+      {/* Floating bubbles — section background, outside cards */}
+      <div style={{ position: 'relative' }}>
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 0 }}>
+          {sectionBubbles.map((b, i) => (
+            <motion.div
+              key={i}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: b.duration, delay: b.delay, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute',
+                top: b.top, left: b.left,
+                width: b.size, height: b.size,
+                borderRadius: '50%',
+                background: `radial-gradient(circle at 35% 35%, ${b.color}30, ${b.color}08)`,
+                border: `1px solid ${b.color}28`,
+                boxShadow: `0 2px 8px ${b.color}18`,
+              }}
+            />
+          ))}
+        </div>
+
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', position: 'relative', zIndex: 1 }}>
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 60 }}>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: 7,
-            padding: '6px 18px', borderRadius: 999,
-            background: 'rgba(62,207,178,0.08)', color: '#4A6CF7',
-            fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 12,
-            border: '1px solid rgba(62,207,178,0.18)',
-            letterSpacing: '0.12em', textTransform: 'uppercase',
-            marginBottom: 20,
-          }}>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 7,
+              padding: '6px 18px', borderRadius: 999,
+              background: 'rgba(62,207,178,0.08)', color: '#4A6CF7',
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 12,
+              border: '1px solid rgba(62,207,178,0.18)',
+              letterSpacing: '0.12em', textTransform: 'uppercase',
+              marginBottom: 20,
+            }}
+          >
             <Sparkles size={12} /> Our Ecosystem
-          </div>
+          </motion.div>
           <h2 style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800,
             color: '#0f1923', marginBottom: 16, lineHeight: 1.1,
             letterSpacing: '-0.04em',
-          }}>The Vyoma Ecosystem</h2>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 'clamp(15px,2vw,17px)', color: '#6b7a90',
-            maxWidth: 500, margin: '0 auto', lineHeight: 1.7, letterSpacing: '-0.01em',
           }}>
+            <StaggerWords text="The Vyoma Ecosystem" delay={0.1} />
+          </h2>
+          <motion.p
+            initial={{ opacity: 0, y: 18, filter: 'blur(3px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: false, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(15px,2vw,17px)', color: '#6b7a90',
+              maxWidth: 500, margin: '0 auto', lineHeight: 1.7, letterSpacing: '-0.01em',
+            }}
+          >
             From school foundations to industrial readiness — our suite of platforms covers the entire learning lifecycle.
-          </p>
+          </motion.p>
         </div>
 
         {/* Cards */}
@@ -586,10 +802,10 @@ const Products: React.FC = () => {
             <motion.div
               key={product.id}
               className="product-card"
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              viewport={{ once: false, margin: '-60px' }}
+              transition={{ delay: idx * 0.12, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
               onMouseEnter={() => setHoveredCard(product.id)}
               onMouseLeave={() => setHoveredCard(null)}
               onClick={() => setActiveModal(product.id)}
@@ -646,6 +862,9 @@ const Products: React.FC = () => {
                 {/* Icon + Status */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18, marginTop: 6 }}>
                   <motion.div
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: false, margin: '-60px' }}
                     animate={{ scale: hoveredCard === product.id ? 1.08 : 1, rotate: hoveredCard === product.id ? 3 : 0 }}
                     transition={{ duration: 0.3 }}
                     style={{
@@ -659,16 +878,22 @@ const Products: React.FC = () => {
                     {product.icon}
                   </motion.div>
 
-                  <div style={{
-                    display: 'flex', alignItems: 'center', gap: 5,
-                    padding: '5px 10px', borderRadius: 999,
-                    fontSize: 10, fontWeight: 700,
-                    fontFamily: "'DM Sans', sans-serif",
-                    color: product.status === 'live' ? '#16a34a' : '#8a9ab0',
-                    background: product.status === 'live' ? '#dcfce7' : 'rgba(15,25,35,0.05)',
-                    border: `1px solid ${product.status === 'live' ? '#bbf7d0' : 'rgba(15,25,35,0.08)'}`,
-                    letterSpacing: '0.04em', textTransform: 'uppercase',
-                  }}>
+                  <motion.div
+                    initial={{ opacity: 0, x: 12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, margin: '-60px' }}
+                    transition={{ duration: 0.4, delay: idx * 0.12 + 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 5,
+                      padding: '5px 10px', borderRadius: 999,
+                      fontSize: 10, fontWeight: 700,
+                      fontFamily: "'DM Sans', sans-serif",
+                      color: product.status === 'live' ? '#16a34a' : '#8a9ab0',
+                      background: product.status === 'live' ? '#dcfce7' : 'rgba(15,25,35,0.05)',
+                      border: `1px solid ${product.status === 'live' ? '#bbf7d0' : 'rgba(15,25,35,0.08)'}`,
+                      letterSpacing: '0.04em', textTransform: 'uppercase',
+                    }}
+                  >
                     {product.status === 'live' && (
                       <motion.span
                         animate={{ scale: [1, 1.4, 1] }}
@@ -677,55 +902,79 @@ const Products: React.FC = () => {
                       />
                     )}
                     {product.statusText}
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Grade badge */}
-                <div style={{
-                  display: 'inline-flex', alignSelf: 'flex-start',
-                  padding: '3px 10px', borderRadius: 999,
-                  fontSize: 10, fontWeight: 700,
-                  fontFamily: "'DM Sans', sans-serif",
-                  color: '#fff', background: product.gradeBg,
-                  textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 14,
-                }}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: false, margin: '-60px' }}
+                  transition={{ duration: 0.4, delay: idx * 0.12 + 0.18, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    display: 'inline-flex', alignSelf: 'flex-start',
+                    padding: '3px 10px', borderRadius: 999,
+                    fontSize: 10, fontWeight: 700,
+                    fontFamily: "'DM Sans', sans-serif",
+                    color: '#fff', background: product.gradeBg,
+                    textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 14,
+                  }}
+                >
                   {product.grade}
-                </div>
+                </motion.div>
 
+                {/* Product name — word stagger */}
                 <h3 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 28, fontWeight: 800,
                   color: '#0f1923', marginBottom: 5, lineHeight: 1.05,
                   letterSpacing: '-0.04em',
                 }}>
-                  {product.name}
+                  <StaggerWords text={product.name} delay={idx * 0.12 + 0.22} />
                 </h3>
 
-                <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 12, fontWeight: 700,
-                  color: product.accentColor, marginBottom: 12,
-                  letterSpacing: '0.01em',
-                }}>
+                {/* Tagline — blur fade */}
+                <motion.p
+                  initial={{ opacity: 0, y: 10, filter: 'blur(3px)' }}
+                  whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  viewport={{ once: false, margin: '-60px' }}
+                  transition={{ duration: 0.45, delay: idx * 0.12 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 12, fontWeight: 700,
+                    color: product.accentColor, marginBottom: 12,
+                    letterSpacing: '0.01em',
+                  }}
+                >
                   {product.tagline}
-                </p>
+                </motion.p>
 
-                <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  color: '#6b7a90', fontSize: 13.5,
-                  lineHeight: 1.7, flexGrow: 1, marginBottom: 20,
-                  letterSpacing: '-0.005em',
-                }}>
+                {/* Description */}
+                <motion.p
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: idx * 0.12 + 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    color: '#6b7a90', fontSize: 13.5,
+                    lineHeight: 1.7, flexGrow: 1, marginBottom: 20,
+                    letterSpacing: '-0.005em',
+                  }}
+                >
                   {product.description}
-                </p>
+                </motion.p>
 
-                {/* Highlights */}
+                {/* Highlights — cascade */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 22 }}>
-                  {product.highlights.map(h => (
+                  {product.highlights.map((h, hi) => (
                     <motion.span
                       key={h}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: false, margin: '-60px' }}
                       animate={{ background: hoveredCard === product.id ? product.accentColor + '18' : product.accentLight }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.35, delay: idx * 0.12 + 0.44 + hi * 0.07, ease: [0.22, 1, 0.36, 1] }}
                       style={{
                         padding: '4px 10px', borderRadius: 999,
                         color: product.accentColor,
@@ -738,6 +987,9 @@ const Products: React.FC = () => {
                     </motion.span>
                   ))}
                 </div>
+
+                {/* QR Code — all cards */}
+                <QRSection url="https://www.curioteach.com/" accentColor={product.accentColor} productName={product.name} />
 
                 {/* Footer row */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
@@ -889,6 +1141,7 @@ const Products: React.FC = () => {
           </div>
         </Modal>
 
+      </div>
       </div>
     </>
   );
