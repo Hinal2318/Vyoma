@@ -1142,6 +1142,81 @@ const Products: React.FC = () => {
         </Modal>
 
       </div>
+
+      {/* ══ REQUEST DEMO CTA ══ */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        transition={{ duration: 0.6 }}
+        style={{
+          margin: '64px auto 0',
+          maxWidth: 900,
+          background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%)',
+          borderRadius: 24,
+          padding: '48px 40px',
+          textAlign: 'center',
+          border: '1px solid rgba(74,108,247,0.12)',
+          boxShadow: '0 4px 32px rgba(74,108,247,0.08)',
+        }}
+      >
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.1 }}
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 'clamp(22px, 3.5vw, 36px)',
+            fontWeight: 800,
+            color: '#0f1923',
+            marginBottom: 12,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Ready to experience the future?
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.18 }}
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 16,
+            color: '#5a6a8a',
+            marginBottom: 32,
+            lineHeight: 1.6,
+          }}
+        >
+          Join the Vyoma ecosystem today and transform how your institution learns.
+        </motion.p>
+        <motion.a
+          href="#contact"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.26 }}
+          style={{
+            display: 'inline-block',
+            background: 'linear-gradient(135deg, #1a2b5e, #4A6CF7)',
+            color: '#fff',
+            padding: '16px 40px',
+            borderRadius: 999,
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 700,
+            fontSize: 16,
+            textDecoration: 'none',
+            boxShadow: '0 8px 28px rgba(74,108,247,0.32)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Request a Demo →
+        </motion.a>
+      </motion.div>
+
       </div>
     </>
   );

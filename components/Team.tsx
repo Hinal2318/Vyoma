@@ -287,6 +287,84 @@ const Team: React.FC = () => {
           </motion.div>
         ))}
       </motion.div>
+
+      {/* ══ JOIN TEAM CTA ══ */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        transition={{ duration: 0.6 }}
+        style={{
+          marginTop: 64,
+          background: 'linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%)',
+          borderRadius: 24,
+          padding: '36px 40px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 24,
+          flexWrap: 'wrap',
+          border: '1px solid rgba(74,108,247,0.10)',
+          boxShadow: '0 4px 24px rgba(74,108,247,0.07)',
+        }}
+      >
+        <div>
+          <motion.h3
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ delay: 0.1 }}
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: 'clamp(18px, 2.5vw, 26px)',
+              fontWeight: 700,
+              color: '#1a2b5e',
+              marginBottom: 8,
+            }}
+          >
+            Want to build the future of education?
+          </motion.h3>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ delay: 0.18 }}
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 15,
+              color: '#5a6a8a',
+              margin: 0,
+            }}
+          >
+            We're always looking for passionate people to join our growing team.
+          </motion.p>
+        </div>
+        <motion.a
+          href="#contact"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, x: 16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.26 }}
+          style={{
+            display: 'inline-block',
+            background: '#ffffff',
+            color: '#1a2b5e',
+            padding: '14px 32px',
+            borderRadius: 999,
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 700,
+            fontSize: 15,
+            textDecoration: 'none',
+            border: '1.5px solid rgba(26,43,94,0.18)',
+            boxShadow: '0 2px 12px rgba(26,43,94,0.08)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          See Open Roles
+        </motion.a>
+      </motion.div>
     </div>
   );
 };

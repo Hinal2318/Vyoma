@@ -206,6 +206,97 @@ const Partners: React.FC = () => {
         >
           {partners.length} institutional partners &amp; growing
         </motion.p>
+
+        {/* ══ BECOME A PARTNER CTA ══ */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15, duration: 0.6 }}
+          style={{
+            marginTop: 48,
+            background: 'linear-gradient(135deg, #e8f4ff 0%, #eef2ff 100%)',
+            borderRadius: 24,
+            padding: '48px 40px',
+            textAlign: 'center',
+            border: '1px solid rgba(74,108,247,0.12)',
+            boxShadow: '0 4px 32px rgba(74,108,247,0.07)',
+          }}
+        >
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: 600,
+              fontSize: 11,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: '#4A6CF7',
+              marginBottom: 16,
+            }}
+          >
+            PARTNERSHIP OPPORTUNITIES
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.25 }}
+            style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: 'clamp(22px, 3.5vw, 36px)',
+              fontWeight: 800,
+              color: '#0f1923',
+              marginBottom: 12,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Interested in partnering with Vyoma?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.32 }}
+            style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: 15,
+              color: '#5a6a8a',
+              marginBottom: 32,
+              lineHeight: 1.7,
+            }}
+          >
+            Whether you're an institution, corporation, or government body —<br />
+            let's build the future of education together.
+          </motion.p>
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #1a2b5e, #4A6CF7)',
+              color: '#fff',
+              padding: '16px 40px',
+              borderRadius: 999,
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: 700,
+              fontSize: 16,
+              textDecoration: 'none',
+              boxShadow: '0 8px 28px rgba(74,108,247,0.30)',
+              letterSpacing: '0.01em',
+            }}
+          >
+            Become a Partner →
+          </motion.a>
+        </motion.div>
       </div>
     </>
   );

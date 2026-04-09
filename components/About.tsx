@@ -2,62 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Zap, BookOpen, Award, ArrowRight } from 'lucide-react';
 
-// Reusable fade-up reveal
-const FadeUp = ({
-  children,
-  delay = 0,
-  style,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  style?: React.CSSProperties;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 28 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: false, margin: "-60px" }}
-    transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-    style={style}
-  >
-    {children}
-  </motion.div>
-);
-
-// Word-by-word stagger for a text string
-const StaggerWords = ({
-  text,
-  delay = 0,
-  style,
-  wordStyle,
-}: {
-  text: string;
-  delay?: number;
-  style?: React.CSSProperties;
-  wordStyle?: React.CSSProperties;
-}) => {
-  const words = text.split(' ');
-  return (
-    <span style={{ display: 'inline', ...style }}>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          viewport={{ once: false, margin: "-60px" }}
-          transition={{
-            duration: 0.5,
-            delay: delay + i * 0.06,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          style={{ display: 'inline-block', marginRight: '0.28em', ...wordStyle }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </span>
-  );
-};
-
 const About: React.FC = () => {
   const videoSrc = './images/about-video.mp4';
   const [hoveredStat, setHoveredStat] = useState<number | null>(null);
@@ -83,14 +27,19 @@ const About: React.FC = () => {
       >
 
         {/* ── LEFT: Text ── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-
-          {/* Eyebrow pill — slides in from left */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 0 }}
+        >
+          {/* Eyebrow */}
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-60px" }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
             style={{ marginBottom: 16 }}
           >
             <span style={{
@@ -106,45 +55,41 @@ const About: React.FC = () => {
             </span>
           </motion.div>
 
-          {/* Heading — word-by-word stagger */}
-          <h2 style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 'clamp(27px, 4vw, 47px)',
-            fontWeight: 800,
-            color: '#1a2b5e',
-            lineHeight: 1.18,
-            margin: '0 0 22px',
-            letterSpacing: '-0.04em',
-          }}>
-            <StaggerWords text="More than just courses." delay={0.05} />
-            <br />
-            <StaggerWords text="We build the" delay={0.28} />
-            {' '}
-            <motion.span
-              initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: false, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                display: 'inline-block',
-                background: 'linear-gradient(135deg, #7C3AED, #4A6CF7)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              future infrastructure
-            </motion.span>
-            {' '}
-            <StaggerWords text="of digital learning." delay={0.8} />
-          </h2>
-
-          {/* Primary paragraph — line by line */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
+          {/* Heading */}
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.18 }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(27px, 4vw, 47px)',
+              fontWeight: 800,
+              color: '#1a2b5e',
+              lineHeight: 1.12,
+              margin: '0 0 22px',
+              letterSpacing: '-0.04em',
+            }}
+          > More than just courses.
+            <br className="hidden sm:block" />
+            We build the{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #7C3AED, #4A6CF7)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              future infrastructure
+            </span>{' '}
+            of digital learning.
+          </motion.h2>
+
+          {/* Primary paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.26 }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(15px, 1.6vw, 17px)',
@@ -160,10 +105,10 @@ const About: React.FC = () => {
 
           {/* Secondary paragraph */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.32 }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(14px, 1.4vw, 16px)',
@@ -176,37 +121,35 @@ const About: React.FC = () => {
             to ensure that knowledge isn't just consumed—it's mastered.
           </motion.p>
 
-          {/* Keyword pills — cascade in */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
-            {pills.map((p, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: false, margin: "-60px" }}
-                transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 12, fontWeight: 600,
-                  color: '#1a2b5e',
-                  background: 'rgba(26,43,94,0.06)',
-                  border: '1px solid rgba(26,43,94,0.10)',
-                  padding: '5px 13px', borderRadius: 999,
-                  letterSpacing: '-0.01em',
-                  display: 'inline-block',
-                }}
-              >
-                {p}
-              </motion.span>
-            ))}
-          </div>
-
-          {/* Accent divider — grows from left */}
+          {/* Keyword pills */}
           <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            whileInView={{ scaleX: 1, opacity: 1 }}
-            viewport={{ once: false, margin: "-60px" }}
-            transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.38 }}
+            style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}
+          >
+            {pills.map((p, i) => (
+              <span key={i} style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 12, fontWeight: 600,
+                color: '#1a2b5e',
+                background: 'rgba(26,43,94,0.06)',
+                border: '1px solid rgba(26,43,94,0.10)',
+                padding: '5px 13px', borderRadius: 999,
+                letterSpacing: '-0.01em',
+              }}>
+                {p}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Accent divider */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.44, duration: 0.6 }}
             style={{
               height: 3, width: 56, borderRadius: 99,
               background: 'linear-gradient(90deg, #1a2b5e, #4A6CF7)',
@@ -215,15 +158,73 @@ const About: React.FC = () => {
             }}
           />
 
-          
+          {/* Stats grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.50 }}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: 12,
+            }}
+          >
+            {stats.map((s, i) => (
+              <motion.div
+                key={i}
+                onMouseEnter={() => setHoveredStat(i)}
+                onMouseLeave={() => setHoveredStat(null)}
+                animate={{
+                  y: hoveredStat === i ? -4 : 0,
+                  boxShadow: hoveredStat === i
+                    ? '0 12px 32px rgba(26,43,94,0.12)'
+                    : '0 2px 10px rgba(26,43,94,0.06)',
+                }}
+                transition={{ duration: 0.25 }}
+                style={{
+                  background: '#ffffff',
+                  borderRadius: 16,
+                  padding: '16px 18px',
+                  border: '1px solid rgba(26,43,94,0.07)',
+                  cursor: 'default',
+                  display: 'flex', alignItems: 'center', gap: 12,
+                }}
+              >
+                <div style={{
+                  width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                  background: s.bg, color: s.color,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  {s.icon}
+                </div>
+                <div>
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 20, fontWeight: 800, color: '#1a2b5e',
+                    letterSpacing: '-0.04em', lineHeight: 1,
+                  }}>
+                    {s.value}
+                  </div>
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 11, fontWeight: 600, color: '#8a9ab0',
+                    letterSpacing: '0.05em', textTransform: 'uppercase', marginTop: 2,
+                  }}>
+                    {s.label}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* ── RIGHT: Video ── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
           style={{ position: 'relative' }}
         >
